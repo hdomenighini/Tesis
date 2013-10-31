@@ -8,17 +8,17 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.AutoComplete;
+import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.DescribedAs;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.RegEx;
-import org.apache.isis.applib.filter.Filter;
 import org.apache.isis.applib.util.TitleBuffer;
 
-
 import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
 
 
 
@@ -27,8 +27,8 @@ import com.google.common.base.Objects;
 @javax.jdo.annotations.Queries({ @javax.jdo.annotations.Query(name = "listado_cliente", language = "JDQL", value = "SELECT * FROM dom.cliente.Cliente WHERE activo== :true ") })
 @javax.jdo.annotations.Version(strategy = VersionStrategy.VERSION_NUMBER, column = "VERSION")
 @ObjectType("Cliente")
-
 @AutoComplete(repository = ClienteServicio.class, action = "autoComplete")
+@Bookmarkable
 public class Cliente {
 
 	public static enum TipoId {
@@ -46,7 +46,7 @@ public class Cliente {
 
 	// {{ OwnedBy (property)
 	private String ownedBy;
-
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@Hidden
 	public String getOwnedBy() {
 		return ownedBy;
@@ -58,7 +58,7 @@ public class Cliente {
 
 	// {{ Nombre
 	private String nombre;
-
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(sequence = "1")
 	public String getNombre() {
@@ -71,7 +71,7 @@ public class Cliente {
 
 	// {{ Apellido
 	private String apellido;
-
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(sequence = "2")
 	public String getApellido() {
@@ -84,7 +84,7 @@ public class Cliente {
 
 	// {{ Tipo de Identificacion Tributaria
 	private TipoId tipo;
-
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@DescribedAs("Señala el tipo de documento")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(sequence = "3")
@@ -98,6 +98,7 @@ public class Cliente {
 
 	// {{ Numero de Identificacion Tributaria
 	private String numeroIdent;
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(sequence = "4")
 	public String getNumeroIdent() {
@@ -110,7 +111,7 @@ public class Cliente {
 	
 	// {{ Numero de telefono
 	private int numeroTel;
-
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(sequence = "5")
 	public int getNumeroTel() {
@@ -123,7 +124,7 @@ public class Cliente {
 	
 	// {{ Correo electronico
 	private String mail;
-
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(sequence = "6")
 	public String getEmail() {
@@ -137,7 +138,7 @@ public class Cliente {
 		
 	// {{ Activo
 	private boolean activo;
-
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@Hidden
 	@MemberOrder(sequence = "9")
 	public boolean getActivo() {
@@ -154,17 +155,33 @@ public class Cliente {
 	}
 	// }}
 
-	// {{ Filtro
-	public static Filter<Cliente> thoseOwnedBy(final String currentUser) {
-		return new Filter<Cliente>() {
-			@Override
-			public boolean accept(final Cliente cliente) {
-				return Objects.equal(cliente.getOwnedBy(), currentUser);
-			}
-		};
-	}
-	// }}
+	// {{ Predicates
 
+		public static class Predicates {
+
+			public static Predicate<Cliente> thoseOwnedBy(final String currentUser) {
+				return new Predicate<Cliente>() {
+					@Override
+					public boolean apply(final Cliente cliente) {
+						return Objects.equal(cliente.getOwnedBy(), currentUser);
+
+					}
+				};
+			}
+
+			public static Predicate<Cliente> thoseWithSimilarDescription(
+					final String numeroIdent) {
+				return new Predicate<Cliente>() {
+					@Override
+					public boolean apply(final Cliente t) {
+						return t.getNumeroIdent().contains(numeroIdent);
+					}
+				};
+			}
+		}
+
+		// }}
+	
 	// {{ injected: DomainObjectContainer
 	private DomainObjectContainer container;
 

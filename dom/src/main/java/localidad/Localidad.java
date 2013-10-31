@@ -4,6 +4,7 @@ package localidad;
 import javax.jdo.annotations.IdentityType;
 
 
+import org.apache.isis.applib.annotation.DescribedAs;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
@@ -31,7 +32,8 @@ public class Localidad {
 	}	
 	
 	// {{ Nombre de localidad
-	private String nombreLocalidad;		
+	private String nombreLocalidad;
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(sequence="1")
 	public String getNombreLocalidad() {
@@ -43,8 +45,11 @@ public class Localidad {
 	// }}
 	
 	// {{ Campo Activo
-	private boolean activo=true;	
-   	
+	private boolean activo=true;
+	@javax.jdo.annotations.Column(allowsNull = "false")
+	@Hidden
+	@DescribedAs("Activo")
+	@MemberOrder(sequence = "2")
    	public boolean getActivo() {
    		return activo; 
    	}    	
@@ -58,6 +63,7 @@ public class Localidad {
 	
 	// {{ OwnedBy (property)	
 	private String ownedBy;
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@Hidden 
 	public String getOwnedBy() {
 	    return ownedBy;	

@@ -4,16 +4,16 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.AutoComplete;
+import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.DescribedAs;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.RegEx;
-import org.apache.isis.applib.filter.Filter;
 import org.apache.isis.applib.util.TitleBuffer;
 
-
 import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
@@ -22,8 +22,8 @@ import com.google.common.base.Objects;
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 
 @ObjectType("CATEGORIA")
-
 @AutoComplete(repository=CategoriaServicio.class, action="autoComplete")
+@Bookmarkable
 
 public class Categoria {
 
@@ -46,8 +46,8 @@ public class Categoria {
     
     // {{ OwnedBy (property)
     private String ownedBy;
+    @javax.jdo.annotations.Column(allowsNull = "false")
     @Hidden
-	
 	public String getOwnedBy() {
 	    return ownedBy;
 	}
@@ -59,7 +59,7 @@ public class Categoria {
 	
 	//{{ Nombre de Categoria
 	private String categoria;
-	
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(sequence="1")
 	public String getNombre() {
@@ -73,7 +73,7 @@ public class Categoria {
 	
 	//{{ Cantidad de puertas
     private int cantPuertas ;
-	
+    @javax.jdo.annotations.Column(allowsNull = "false")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(sequence="2")
 	public int getCantPuertas() {
@@ -87,6 +87,7 @@ public class Categoria {
 	
 	//{{ Cantidad de Plazas
 	private int cantPlazas ;
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(sequence="3")
 	public int getCantPlazas() {
@@ -100,6 +101,7 @@ public class Categoria {
 	
 	//{{ Caja
 	private Caja caja;
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@DescribedAs("Señala tipo de caja del vehiculo.")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(sequence="4")
@@ -114,6 +116,7 @@ public class Categoria {
 	
 	//{{ Traccion
 	private Traccion traccion;
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@DescribedAs("Señala tipo de traccion del vehiculo.")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(sequence="5")
@@ -129,6 +132,7 @@ public class Categoria {
 	
 	//{{ Precio
 	private int precio;
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@DescribedAs("El precio de la categoria.")
     @RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
     @MemberOrder(sequence = "6")
@@ -142,6 +146,7 @@ public class Categoria {
 	
 	// {{ Activo
    	private boolean activo;
+   	@javax.jdo.annotations.Column(allowsNull = "false")
    	@Hidden
    	@MemberOrder(sequence="7")
     public boolean getActivo() {
@@ -157,18 +162,37 @@ public class Categoria {
         setActivo(false);
 	}
     // }}
+    
+    
+    
+ // {{ Predicates
+
+ 	public static class Predicates {
+
+ 		public static Predicate<Categoria> thoseOwnedBy(final String currentUser) {
+ 			return new Predicate<Categoria>() {
+ 				@Override
+ 				public boolean apply(final Categoria categoria) {
+ 					return Objects.equal(categoria.getOwnedBy(), currentUser);
+
+ 				}
+ 			};
+ 		}
+
+ 		public static Predicate<Categoria> thoseWithSimilarDescription(
+ 				final String nombre) {
+ 			return new Predicate<Categoria>() {
+ 				@Override
+ 				public boolean apply(final Categoria t) {
+ 					return t.getNombre().contains(nombre);
+ 				}
+ 			};
+ 		}
+ 	}
+
+ 	// }}
 	
-	// {{ Filtro 
-   	public static Filter<Categoria> thoseOwnedBy(final String currentUser) {
-        return new Filter<Categoria>() {
-        @Override
-        public boolean accept(final Categoria categoria) {
-                return Objects.equal(categoria.getOwnedBy(), currentUser);
-            }
-        };
-    }
-   	// }}
-		
+			
 	// {{ injected: DomainObjectContainer
     private DomainObjectContainer container;
     protected DomainObjectContainer getContainer() {

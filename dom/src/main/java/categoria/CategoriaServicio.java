@@ -10,11 +10,11 @@ import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.NotInServiceMenu;
-import org.apache.isis.applib.filter.Filter;
 
 import autos.Auto;
 
 import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
 
 
 import categoria.Categoria.Caja;
@@ -77,9 +77,9 @@ public class CategoriaServicio extends AbstractFactoryAndRepository {
     }
 
     protected List<Categoria> listaCategorias() {
-        return allMatches(Categoria.class, new Filter<Categoria>() {
+        return allMatches(Categoria.class, new Predicate<Categoria>() {
             @Override
-            public boolean accept(final Categoria t) {
+            public boolean apply(final Categoria t) {
                 return t.getActivo();
             }
         });
@@ -89,16 +89,16 @@ public class CategoriaServicio extends AbstractFactoryAndRepository {
 	// {{ Listado de Autos filtrado por Categoria
     @MemberOrder(sequence="3") 
 	public List<Auto> listadoAutosPorCategoria(final Categoria lista) {
-		return allMatches(Auto.class, new Filter<Auto>() {
+		return allMatches(Auto.class, new Predicate<Auto>() {
 		@Override
-		public boolean accept(Auto t){
+		public boolean apply(Auto t){
 		return  lista.equals(t.getCategoria())&& t.getActivo();
 		}
 	  });
 	}
 	// }} 
 	
-	// {{ 
+	/*// {{AutoComplet 
 	@Hidden    
 	public List<Categoria> autoComplete(final String cat) {
 		return allMatches(Categoria.class, new Filter<Categoria>() {
@@ -108,7 +108,7 @@ public class CategoriaServicio extends AbstractFactoryAndRepository {
 		}
 	  });				
 	}
-	// }}    
+	// }}*/ 
 		
 	// {{ helpers
 	protected boolean ownedByCurrentUser(final Categoria t) {
