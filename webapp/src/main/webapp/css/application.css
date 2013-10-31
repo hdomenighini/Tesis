@@ -21,148 +21,139 @@
 uncomment to add a logo (in an ../images directory relative to this file)
 */
 #header {
-    height: 101px;   
-    background-image: url("../images/loguito1.png);
-	color:rgb(246,116,0);
-	
+	height: 120px;
+	background-image: url("../ images/ loguito1.png);
+	entityIconAndTitlePanel a img {
+    display: none;
+	}	
 }
 
-.headerContainer{
+.headerContainer {
 	
-	 background-image: url("../images/loguito1.png");
+	background-image: url("../images/loguito1.png");
+	background-repeat: no-repeat;
+	background-position: center top;
 }
-
-
 
 #header h1 {
-
-	color:rgb(246,116,0);
+	color: #FF0000;
 }
 
-
-
-a#header{
- text-decoration: underline;	
+a#header {
+	text-decoration: underline;
 }
-
-
 
 .bookmarkedPagesPanel {
-
-	display:none;
+	display: visibility;
 }
 
 .bookmarkedPagesPanel .bookmarkedPagesList {
-   display:none;
-
+	
+	display: visibility;
 }
 
 .bookmarkedPagesPanel .bookmarkedPageItem {
-    display:none;
+	display: visibility;
 }
 
 .bookmarkedPagesPanel span.bookmarkedPageImageAndTitle {
-  display:none;
+	display: visibility;
 }
 
 .bookmarkedPagesPanel span.bookmarkedPageImageAndTitle:hover {
-    display:none;
+	display: visibility;
 }
 
 .bookmarkedPagesPanel .bookmarkedPagesList a img.bookmarkedPageImage {
-    display:none;
+	display: visibility;
 }
 
 .bookmarkedPagesPanel .bookmarkedPagesList span.bookmarkedPageTitle {
-display:none;
+	display: visibility;
 }
 
 .bookmarkedPagesPanel span.bookmarkedPageTitle {
-display:none;
+	display: visibility;
 }
 
-.bookmarkedPagesPanel .bookmarkedPagesList a:hover span.bookmarkedPageTitle {
-display:none;
-}
-
-.bookmarkedPagesPanel .clearBookmarks {
-display:none;
+.bookmarkedPagesPanel .bookmarkedPagesList a:hover span.bookmarkedPageTitle
+	{
+	display: visibility;
 }
 
 .bookmarkedPagesPanel .clearBookmarks {
-display:none;
+	display: visibility;
 }
 
-.bookmarkedPagesPanel .currentBookmark span.bookmarkedPageImageAndTitle,
-.bookmarkedPagesPanel .currentBookmark span.bookmarkedPageTitle {
-    display:none;
+.bookmarkedPagesPanel .clearBookmarks {
+	display: visibility;
 }
 
+.bookmarkedPagesPanel .currentBookmark span.bookmarkedPageImageAndTitle,.bookmarkedPagesPanel .currentBookmark span.bookmarkedPageTitle
+	{
+	display: visibility;
+}
 
 .showPanelTab {
-	display:none;
+	display: visibility;
 }
 
 #bookmarkedPagesSlidingDiv {
-	display:none;
-}
-#bookmarkedPagesSlidingDiv .content {
-   display:none;
+	display:visibility;
 }
 
+#bookmarkedPagesSlidingDiv .content {
+	display: visibility;
+}
 
 .bookmarkDepth0 {
-    display:none;
+	display:visibility;
 }
+
 .bookmarkDepth1 {
-    display:none;
+	display: visibility;
 }
+
 .bookmarkDepth2 {
-   display:none;
+	display:visibility;
 }
+
 .bookmarkDepth3 {
-    display:none;
+	display:visibility;
 }
+
 .bookmarkDepth4 {
-    display:none;
+	display: visibility;
 }
+
 .bookmarkDepth5 {
-    display:none;
+	display: visibility;
 }
 
 .clearBookmarkPlaceHolder {
-display:none;
+	display: visibility;
 }
 
-.clearBookmark,
-.clearBookmarks {
-   display:none;
+.clearBookmark,.clearBookmarks {
+	display: visibility;
 }
 
 .clearBookmarks span {
-	display:none;
+	display: visibility;
 }
 
-.bookMarkedPageItem{
-	display:none;
-	
+.bookMarkedPageItem {
+	display: visibility;
 }
 
-
-.bookMarkedPageImage{
-	display:none;
-	
+.bookMarkedPageImage {
+	display: visibility;
 }
 
-.bookMarkedPageTitle{
-	display:none;
-	
+.bookMarkedPageTitle {
+	display: visibility;
 }
 
 div#links.a {
-	
-	color:rgb(246,116,0);	
+	color: #FF0000;
 }
-
-
-
