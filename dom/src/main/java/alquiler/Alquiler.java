@@ -2,6 +2,7 @@ package alquiler;
 
 
 
+import java.awt.List;
 import java.util.Date;
 
 import javax.jdo.annotations.IdentityType;
@@ -10,6 +11,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.AutoComplete;
+import org.apache.isis.applib.annotation.Bookmarkable;
 import org.apache.isis.applib.annotation.DescribedAs;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
@@ -21,6 +23,7 @@ import org.apache.isis.applib.annotation.MemberGroups;
 
 import autos.Auto;
 
+import categoria.Categoria;
 import cliente.Cliente;
 
 
@@ -29,10 +32,8 @@ import cliente.Cliente;
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
-@MemberGroups({"Cliente", "Categoria","Auto","Medio de Pago", "Fecha de Alquiler"})
-@AutoComplete(repository=AlquilerServicio.class, action="autoComplete")
-
-
+//@MemberGroups({"Cliente", "Categoria","Auto","Medio de Pago", "Fecha de Alquiler"})
+//@AutoComplete(repository=AlquilerServicio.class, action="autoComplete")
 @ObjectType("ALQUILER")
 public class Alquiler {
 	
@@ -51,6 +52,7 @@ public class Alquiler {
 	
 	// {{ {{ OwnedBy (property)	
 	private String ownedBy;
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@Hidden 
 	public String getOwnedBy() {
 	    return ownedBy;	
@@ -59,9 +61,10 @@ public class Alquiler {
 	    this.ownedBy = ownedBy;	
 	}	
 	// }}
-	/*
+	
 	// {{ Categoria	
 	private Categoria categoria;
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@DescribedAs("La categoria del vehiculo.")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(name="Categoria",sequence="1")	
@@ -72,9 +75,14 @@ public class Alquiler {
 		this.categoria=categoria;
 	}	
 	// }}
-	*/
+	
+	//{{
+	
+	//}}
+	
 	// {{ Auto	
 	private Auto auto;
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@DescribedAs("El vehiculo.")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(name="Auto",sequence="1")	
@@ -88,6 +96,7 @@ public class Alquiler {
 	
 	// {{ Cliente		
 	private Cliente clienteId;
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@DescribedAs("Numero de CUIL/CUIT")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(name="Cliente",sequence="2")	
@@ -101,7 +110,7 @@ public class Alquiler {
 	
 	// {{ Tipo de Pago
 	private TipoPago tipoPago;
-
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(name="Medio de Pago",sequence="1")	
 	public TipoPago getTipoPago() {
@@ -114,6 +123,7 @@ public class Alquiler {
 	
 	// {{ Precio 
 	private float precio;
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(name="Medio de Pago",sequence="2")	
 	public float getPrecioAlquiler(){
@@ -127,7 +137,7 @@ public class Alquiler {
 	
 	// {{ Numero de Recibo
 	private int recibo;
-	
+	@javax.jdo.annotations.Column(allowsNull = "false")
 	@RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*")
 	@MemberOrder(name="Medio de Pago",sequence="3")
 	public int getNumeroRecibo() {
@@ -140,6 +150,7 @@ public class Alquiler {
 	
   	// {{ Fecha de Alquiler del vehiculo
     private Date fechaAlq;
+    @javax.jdo.annotations.Column(allowsNull = "false")
     @DescribedAs("Señala la fecha de alquiler del vehiculo.")
     @MemberOrder(name="Fecha de Alquiler",sequence="1")
     public Date getFechaAlquiler() {
@@ -155,6 +166,7 @@ public class Alquiler {
 	
   	// {{ Fecha de Devolucion del vehiculo
     private Date fechaDev;
+    @javax.jdo.annotations.Column(allowsNull = "false")
     @DescribedAs("Señala la fecha de devolución del vehiculo.")
     @MemberOrder(name="Fecha de Alquiler",sequence="2")
     public Date getFechaDevolucion() {
@@ -170,6 +182,7 @@ public class Alquiler {
     
     // {{ Campo Activo
    	private boolean activo;
+   	@javax.jdo.annotations.Column(allowsNull = "false")
    	@Hidden
    	@DescribedAs("Activo")
    	@MemberOrder(sequence="12")
